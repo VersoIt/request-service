@@ -1,6 +1,8 @@
 module RequestService
 
-go 1.23.2
+go 1.23.8
+
+toolchain go1.24.7
 
 require (
 	github.com/avito-tech/go-transaction-manager v1.5.1
@@ -16,13 +18,17 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-sql-driver/mysql v1.9.3 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mfridman/interpolate v0.0.2 // indirect
+	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/pressly/goose/v3 v3.25.0 // indirect
 	github.com/sethvargo/go-retry v0.3.0 // indirect
 	github.com/stretchr/testify v1.11.0 // indirect
+	github.com/twmb/franz-go v1.19.5 // indirect
+	github.com/twmb/franz-go/pkg/kmsg v1.11.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	go.uber.org/multierr v1.11.0 // indirect

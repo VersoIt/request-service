@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Request struct {
 	ID        int64
@@ -8,6 +11,10 @@ type Request struct {
 	Payload   []byte
 	Status    RequestStatus
 	CreatedAt time.Time
+}
+
+func (r *Request) String() string {
+	return fmt.Sprintf("%d-%s-%s", r.ID, r.Type, r.Payload)
 }
 
 type Requests []Request

@@ -14,10 +14,16 @@ type Config struct {
 	Postgres             Postgres
 	ServerCloseTimeoutMS time.Duration
 	Server               Server
+	KafkaProducer        KafkaProducer
 }
 
 type Server struct {
 	Port int
+}
+
+type KafkaProducer struct {
+	Brokers []string
+	Topic   string
 }
 
 type Postgres struct {

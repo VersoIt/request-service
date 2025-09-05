@@ -4,6 +4,7 @@ import (
 	"RequestService/config"
 	requestuc "RequestService/internal/app/usecase/request"
 	requestservice "RequestService/internal/domain/service/request"
+	"RequestService/internal/infrastructure/kafka"
 	"RequestService/internal/infrastructure/pg"
 	"RequestService/internal/infrastructure/pg/migrator"
 	requestrepo "RequestService/internal/infrastructure/pg/repository/request"
@@ -38,6 +39,11 @@ func main() {
 		logrus.Panic(err)
 	}
 
+	kafkaProducer, err := kafka.New(cfg)
+	if err != nil {
+		logrus.Panic(err)
+	}
+
 	txManager := manager.Must(trmgr.NewDefaultFactory(db))
 
 	requestRepo := requestrepo.New(db, trmgr.DefaultCtxGetter)
@@ -45,7 +51,7 @@ func main() {
 
 	requestService := requestservice.New(requestRepo, userRepo)
 
-	requestUC := requestuc.New(requestRepo, requestService, txManager)
+	requestUC := requestuc.New(requestRepo, requestService, txManager, kafkaProducer, cfg)
 
 	handler := http.NewHandler(requestUC)
 

@@ -1,21 +1,30 @@
 package request
 
-import "github.com/avito-tech/go-transaction-manager/trm/manager"
+import (
+	"RequestService/config"
+	"github.com/avito-tech/go-transaction-manager/trm/manager"
+)
 
 type UC struct {
 	requestRepo    requestRepository
 	requestService requestService
-	manager        *manager.Manager
+	txManager      *manager.Manager
+	kafkaProducer  kafkaProducer
+	cfg            config.Config
 }
 
 func New(
 	requestRepo requestRepository,
 	requestService requestService,
 	txManager *manager.Manager,
+	kafkaProducer kafkaProducer,
+	cfg config.Config,
 ) *UC {
 	return &UC{
 		requestService: requestService,
 		requestRepo:    requestRepo,
-		manager:        txManager,
+		txManager:      txManager,
+		kafkaProducer:  kafkaProducer,
+		cfg:            cfg,
 	}
 }

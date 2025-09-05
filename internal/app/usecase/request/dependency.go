@@ -19,3 +19,7 @@ type requestService interface {
 		userID int64,
 	) (int64, error)
 }
+
+type kafkaProducer interface {
+	SendMessage(ctx context.Context, topic string, key, value []byte) error
+}
