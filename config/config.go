@@ -59,6 +59,12 @@ func MustGet() Config {
 		if err != nil {
 			log.Panicf("error decoding config file: %v", err)
 		}
+
+		config.Postgres.Host = os.Getenv("POSTGRES_HOST")
+		config.Postgres.Port = os.Getenv("POSTGRES_PORT")
+		config.Postgres.DBName = os.Getenv("POSTGRES_DB")
+		config.Postgres.User = os.Getenv("POSTGRES_USER")
+		config.Postgres.Password = os.Getenv("POSTGRES_PASSWORD")
 	})
 
 	return config

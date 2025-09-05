@@ -34,6 +34,12 @@ services:
       - "29092:29092"
   app:
     build: .
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: request
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     depends_on:
       - db
       - kafka
