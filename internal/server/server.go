@@ -1,7 +1,7 @@
 package server
 
 import (
-	"RequestService/cfg"
+	"RequestService/config"
 	"github.com/labstack/echo/v4"
 	"sync/atomic"
 	"time"
@@ -10,12 +10,12 @@ import (
 type Server struct {
 	e                  *echo.Echo
 	started            atomic.Int32
-	cfg                cfg.Config
+	cfg                config.Config
 	shutdownTimeoutSec time.Duration
 	handlers           []handler
 }
 
-func New(cfg cfg.Config, e *echo.Echo, handlers ...handler) *Server {
+func New(cfg config.Config, e *echo.Echo, handlers ...handler) *Server {
 	return &Server{
 		e:                  e,
 		cfg:                cfg,

@@ -1,9 +1,11 @@
 package main
 
 import (
-	"RequestService/cfg"
+	"RequestService/config"
 	requestuc "RequestService/internal/app/usecase/request"
 	requestservice "RequestService/internal/domain/service/request"
+	"RequestService/internal/infrastructure/pg"
+	"RequestService/internal/infrastructure/pg/migrator"
 	requestrepo "RequestService/internal/infrastructure/pg/repository/request"
 	userrepo "RequestService/internal/infrastructure/pg/repository/user"
 	"RequestService/internal/server"
@@ -12,9 +14,9 @@ import (
 	"context"
 	trmgr "github.com/avito-tech/go-transaction-manager/sqlx"
 	"github.com/avito-tech/go-transaction-manager/trm/manager"
-	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
+	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"sync"
@@ -22,7 +24,19 @@ import (
 )
 
 func main() {
-	var db *sqlx.DB
+	cfg := config.MustGet()
+
+	db, err := pg.New(cfg)
+	if err != nil {
+		logrus.Panic(err)
+	}
+
+	pgMigrator := migrator.New(db)
+
+	err = pgMigrator.Migrate()
+	if err != nil {
+		logrus.Panic(err)
+	}
 
 	txManager := manager.Must(trmgr.NewDefaultFactory(db))
 
@@ -38,7 +52,7 @@ func main() {
 	e := echo.New()
 	e.Validator = validator.New()
 
-	srv := server.New(cfg.Config{}, e, handler)
+	srv := server.New(config.Config{}, e, handler)
 
 	wg := sync.WaitGroup{}
 	wg.Add(1)

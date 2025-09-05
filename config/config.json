@@ -1,0 +1,16 @@
+{
+  "Postgres": {
+    "Host": "localhost",
+    "DBName": "wordwiz",
+    "Port": "5432",
+    "User": "root",
+    "Password": "root",
+    "MaxOpenConns": 25,
+    "MaxIdleConns": 10,
+    "MaxConnLifetimeMin": 5
+  },
+  "Server": {
+    "Port": 8080
+  },
+  "ServerCloseTimeoutMS": 10000
+}
