@@ -21,6 +21,16 @@ type Requests []Request
 
 type RequestType string
 
+var RequestTypes = []RequestType{
+	TypeCertificate,
+	TypePassportApplication,
+	TypeTexDeclaration,
+	TypeLicenseRequest,
+	TypeSocialBenefit,
+	TypeRegistrationUpdate,
+	TypeUnknown,
+}
+
 const (
 	TypeCertificate         RequestType = "certificate"
 	TypePassportApplication             = "passport_application"

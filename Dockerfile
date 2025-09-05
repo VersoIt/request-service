@@ -8,5 +8,6 @@ RUN go build -o myapp ./cmd/main.go
 FROM alpine:3.18
 WORKDIR /app
 COPY --from=builder /app/myapp .
+COPY --from=builder /app/config/config.json /app/config/config.json
 EXPOSE 8080
 CMD ["./myapp"]

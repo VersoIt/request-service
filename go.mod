@@ -26,6 +26,7 @@ require (
 	github.com/mfridman/interpolate v0.0.2 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/pressly/goose/v3 v3.25.0 // indirect
+	github.com/samber/lo v1.51.0 // indirect
 	github.com/sethvargo/go-retry v0.3.0 // indirect
 	github.com/stretchr/testify v1.11.0 // indirect
 	github.com/twmb/franz-go v1.19.5 // indirect

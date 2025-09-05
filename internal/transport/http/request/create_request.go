@@ -12,9 +12,14 @@ func (h *Handler) createRequest(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
+	domainReq, err := req.Domain()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
 	id, err := h.uc.CreateRequest(
 		c.Request().Context(),
-		req.Domain(),
+		domainReq,
 		req.UserID,
 	)
 	if err != nil {
