@@ -1,6 +1,6 @@
 {
   "Postgres": {
-    "Host": "db",
+    "Host": "localhost",
     "DBName": "request",
     "Port": "5432",
     "User": "user",
@@ -15,7 +15,7 @@
   "ServerCloseTimeoutMS": 10000,
   "KafkaProducer": {
     "Brokers": [
-      "kafka:29092"
+      "localhost:29092"
     ],
     "Topic": "request"
   }

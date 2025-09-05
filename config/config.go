@@ -2,7 +2,7 @@ package config
 
 import (
 	"encoding/json"
-	"github.com/sirupsen/logrus"
+	"github.com/labstack/gommon/log"
 	"os"
 	"sync"
 	"time"
@@ -46,7 +46,7 @@ func MustGet() Config {
 	once.Do(func() {
 		fileCfg, err := os.Open(path)
 		if err != nil {
-			logrus.Panicf("error loading config file: %v", err)
+			log.Panicf("error loading config file: %v", err)
 		}
 
 		defer func() {
@@ -57,7 +57,7 @@ func MustGet() Config {
 
 		err = decoder.Decode(&config)
 		if err != nil {
-			logrus.Panicf("error decoding config file: %v", err)
+			log.Panicf("error decoding config file: %v", err)
 		}
 	})
 

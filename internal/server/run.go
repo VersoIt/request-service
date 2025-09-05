@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/labstack/gommon/log"
 	"net/http"
 	"sync"
 	"time"
@@ -21,7 +22,7 @@ func (s *Server) Run(ctx context.Context) error {
 		}
 	}
 
-	s.e.Logger.Info("Server started")
+	log.Info("Server started")
 
 	errChan := make(chan error, 1)
 

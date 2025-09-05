@@ -2,7 +2,7 @@ package kafka
 
 import (
 	"context"
-	"github.com/sirupsen/logrus"
+	"github.com/labstack/gommon/log"
 	"github.com/twmb/franz-go/pkg/kgo"
 	"sync"
 )
@@ -27,11 +27,11 @@ func (k *Kafka) SendMessage(
 		defer wg.Done()
 
 		if err != nil {
-			logrus.Errorf("Failed to send message to Kafka for topic '%s': %v", topic, err)
+			log.Errorf("Failed to send message to Kafka for topic '%s': %v", topic, err)
 			return
 		}
 
-		logrus.Info("Message successfully sent to Kafka for topic '%s'", topic)
+		log.Info("Message successfully sent to Kafka for topic '%s'", topic)
 	})
 
 	wg.Wait()

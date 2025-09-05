@@ -16,11 +16,9 @@ import (
 	"github.com/avito-tech/go-transaction-manager/trm/manager"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"sync"
-	"time"
 )
 
 func main() {
@@ -28,19 +26,19 @@ func main() {
 
 	db, err := pg.New(cfg)
 	if err != nil {
-		logrus.Panic(err)
+		log.Panic(err)
 	}
 
 	pgMigrator := migrator.New(db)
 
 	err = pgMigrator.Migrate()
 	if err != nil {
-		logrus.Panic(err)
+		log.Panic(err)
 	}
 
 	kafkaProducer, err := kafka.New(cfg)
 	if err != nil {
-		logrus.Panic(err)
+		log.Panic(err)
 	}
 
 	txManager := manager.Must(trmgr.NewDefaultFactory(db))
@@ -57,8 +55,7 @@ func main() {
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
-
+	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
 		defer wg.Done()
 

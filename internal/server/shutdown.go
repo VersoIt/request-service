@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"errors"
+	"github.com/labstack/gommon/log"
 )
 
 func (s *Server) shutdown(ctx context.Context) error {
@@ -11,15 +12,15 @@ func (s *Server) shutdown(ctx context.Context) error {
 		closeErr := s.e.Close()
 		if closeErr != nil {
 			shutdownErr = errors.Join(shutdownErr, closeErr)
-			s.e.Logger.Error(closeErr)
+			log.Error(closeErr)
 		} else {
-			s.e.Logger.Info("Server closed forcefully")
+			log.Info("Server closed forcefully")
 		}
 
-		s.e.Logger.Error(shutdownErr)
+		log.Error(shutdownErr)
 	}
 
-	s.e.Logger.Info("Server closed")
+	log.Info("Server closed")
 
 	return shutdownErr
 }
