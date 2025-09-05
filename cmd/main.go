@@ -8,9 +8,8 @@ import (
 	"RequestService/internal/infrastructure/pg"
 	"RequestService/internal/infrastructure/pg/migrator"
 	requestrepo "RequestService/internal/infrastructure/pg/repository/request"
-	userrepo "RequestService/internal/infrastructure/pg/repository/user"
 	"RequestService/internal/server"
-	"RequestService/internal/transport/http"
+	"RequestService/internal/transport/http/request"
 	"RequestService/pkg/validator"
 	"context"
 	trmgr "github.com/avito-tech/go-transaction-manager/sqlx"
@@ -45,15 +44,10 @@ func main() {
 	}
 
 	txManager := manager.Must(trmgr.NewDefaultFactory(db))
-
 	requestRepo := requestrepo.New(db, trmgr.DefaultCtxGetter)
-	userRepo := userrepo.New()
-
-	requestService := requestservice.New(requestRepo, userRepo)
-
+	requestService := requestservice.New(requestRepo)
 	requestUC := requestuc.New(requestRepo, requestService, txManager, kafkaProducer, cfg)
-
-	handler := http.NewHandler(requestUC)
+	handler := request.NewHandler(requestUC)
 
 	e := echo.New()
 	e.Validator = validator.New()

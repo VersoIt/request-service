@@ -17,7 +17,7 @@ func TestService_CreateRequest(t *testing.T) {
 
 	tests := []struct {
 		name          string
-		mockBehaviour func(ur *MockuserRepository, rr *MockrequestRepository)
+		mockBehaviour func(rr *MockrequestRepository)
 		request       model.Request
 		userID        int64
 		newRequestID  int64
@@ -25,8 +25,7 @@ func TestService_CreateRequest(t *testing.T) {
 	}{
 		{
 			name: "Success",
-			mockBehaviour: func(ur *MockuserRepository, rr *MockrequestRepository) {
-				ur.EXPECT().LockUser(gomock.Any(), int64(1)).Return(nil)
+			mockBehaviour: func(rr *MockrequestRepository) {
 				rr.EXPECT().CreateRequest(gomock.Any(), model.Request{}, int64(1)).Return(int64(2), nil)
 				rr.EXPECT().GetHandlingRequests(gomock.Any(), int64(1)).Return(model.Requests{}, nil)
 			},
@@ -36,19 +35,8 @@ func TestService_CreateRequest(t *testing.T) {
 			hasError:     false,
 		},
 		{
-			name: "Lock user error",
-			mockBehaviour: func(ur *MockuserRepository, rr *MockrequestRepository) {
-				ur.EXPECT().LockUser(gomock.Any(), int64(1)).Return(errors.New("lock user error"))
-			},
-			request:      model.Request{},
-			userID:       1,
-			newRequestID: 0,
-			hasError:     true,
-		},
-		{
 			name: "Get handling requests error",
-			mockBehaviour: func(ur *MockuserRepository, rr *MockrequestRepository) {
-				ur.EXPECT().LockUser(gomock.Any(), int64(1)).Return(nil)
+			mockBehaviour: func(rr *MockrequestRepository) {
 				rr.EXPECT().GetHandlingRequests(gomock.Any(), int64(1)).Return(model.Requests{}, errors.New("get error"))
 			},
 			request:      model.Request{},
@@ -58,8 +46,7 @@ func TestService_CreateRequest(t *testing.T) {
 		},
 		{
 			name: "Create request error",
-			mockBehaviour: func(ur *MockuserRepository, rr *MockrequestRepository) {
-				ur.EXPECT().LockUser(gomock.Any(), int64(1)).Return(nil)
+			mockBehaviour: func(rr *MockrequestRepository) {
 				rr.EXPECT().GetHandlingRequests(gomock.Any(), int64(1)).Return(model.Requests{}, nil)
 				rr.EXPECT().CreateRequest(gomock.Any(), model.Request{}, int64(1)).Return(int64(0), errors.New("create request error"))
 			},
@@ -70,8 +57,7 @@ func TestService_CreateRequest(t *testing.T) {
 		},
 		{
 			name: "handling requests > 1",
-			mockBehaviour: func(ur *MockuserRepository, rr *MockrequestRepository) {
-				ur.EXPECT().LockUser(gomock.Any(), int64(1)).Return(nil)
+			mockBehaviour: func(rr *MockrequestRepository) {
 				rr.EXPECT().GetHandlingRequests(gomock.Any(), int64(1)).Return(model.Requests{
 					{
 						ID: 1,
@@ -93,11 +79,10 @@ func TestService_CreateRequest(t *testing.T) {
 			t.Parallel()
 
 			mockRequestRepo := NewMockrequestRepository(controller)
-			mockUserRepo := NewMockuserRepository(controller)
 
-			tt.mockBehaviour(mockUserRepo, mockRequestRepo)
+			tt.mockBehaviour(mockRequestRepo)
 
-			service := requestservice.New(mockRequestRepo, mockUserRepo)
+			service := requestservice.New(mockRequestRepo)
 
 			id, err := service.CreateRequest(context.Background(), tt.request, tt.userID)
 			if (err != nil) != tt.hasError {

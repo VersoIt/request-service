@@ -1,7 +1,7 @@
-package http
+package request
 
 import (
-	"RequestService/internal/transport/http/dto"
+	"RequestService/internal/transport/http/request/dto"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )

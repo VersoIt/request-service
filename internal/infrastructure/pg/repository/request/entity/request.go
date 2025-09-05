@@ -10,6 +10,7 @@ type Request struct {
 	Type      model.RequestType   `db:"type"`
 	Payload   []byte              `db:"payload"`
 	Status    model.RequestStatus `db:"status"`
+	UserID    int64               `db:"user_id"`
 	CreatedAt time.Time           `db:"created_at"`
 }
 

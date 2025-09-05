@@ -1,1 +1,1 @@
-SELECT * FROM requests WHERE status = 'pending' OR status = 'processing' WHERE user_id = $1
+SELECT * FROM requests WHERE (status = 'pending' OR status = 'processing') AND user_id = $1 FOR UPDATE

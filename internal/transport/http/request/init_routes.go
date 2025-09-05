@@ -1,4 +1,4 @@
-package http
+package request
 
 import "github.com/labstack/echo/v4"
 

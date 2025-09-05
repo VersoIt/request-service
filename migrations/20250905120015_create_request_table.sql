@@ -6,7 +6,8 @@ CREATE TABLE requests
     payload    BYTEA,
     status     request_status NOT NULL,
     type       request_type   NOT NULL,
-    created_at TIMESTAMP
+    created_at TIMESTAMP,
+    user_id INTEGER NOT NULL
 );
 -- +goose StatementEnd
 

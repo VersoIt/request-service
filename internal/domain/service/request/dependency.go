@@ -15,19 +15,8 @@ type requestRepository interface {
 		ctx context.Context,
 		id int64,
 	) (model.Request, error)
-	GetHandlingRequests(
+	GetHandlingRequestsWithLock(
 		ctx context.Context,
 		userID int64,
 	) (model.Requests, error)
-}
-
-type userRepository interface {
-	GetUser(
-		ctx context.Context,
-		id int64,
-	) (model.User, error)
-	LockUser(
-		ctx context.Context,
-		id int64,
-	) error
 }

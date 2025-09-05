@@ -6,17 +6,17 @@ import (
 	"context"
 )
 
-func (r *Repository) GetHandlingRequests(
+func (r *Repository) GetHandlingRequestsWithLock(
 	ctx context.Context,
 	userID int64,
 ) (model.Requests, error) {
 
 	var requests entity.Requests
 
-	err := r.txGetter.DefaultTrOrDB(ctx, r.db).GetContext(
+	err := r.txGetter.DefaultTrOrDB(ctx, r.db).SelectContext(
 		ctx,
 		&requests,
-		queryGetHandlingRequests,
+		queryGetHandlingRequestsForUpdate,
 		userID,
 	)
 	if err != nil {

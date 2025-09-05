@@ -1,4 +1,4 @@
-package http
+package request
 
 type Handler struct {
 	uc UC

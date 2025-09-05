@@ -7,7 +7,7 @@ var (
 	queryCreateRequest string
 
 	//go:embed sql/get_handling_requests.sql
-	queryGetHandlingRequests string
+	queryGetHandlingRequestsForUpdate string
 
 	//go:embed sql/get_request.sql
 	queryGetRequest string

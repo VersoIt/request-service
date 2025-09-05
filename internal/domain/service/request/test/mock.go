@@ -51,9 +51,9 @@ func (mr *MockrequestRepositoryMockRecorder) CreateRequest(ctx, request, userID 
 }
 
 // GetHandlingRequests mocks base method.
-func (m *MockrequestRepository) GetHandlingRequests(ctx context.Context, userID int64) (model.Requests, error) {
+func (m *MockrequestRepository) GetHandlingRequestsWithLock(ctx context.Context, userID int64) (model.Requests, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetHandlingRequests", ctx, userID)
+	ret := m.ctrl.Call(m, "GetHandlingRequestsWithLock", ctx, userID)
 	ret0, _ := ret[0].(model.Requests)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
@@ -62,7 +62,7 @@ func (m *MockrequestRepository) GetHandlingRequests(ctx context.Context, userID 
 // GetHandlingRequests indicates an expected call of GetHandlingRequests.
 func (mr *MockrequestRepositoryMockRecorder) GetHandlingRequests(ctx, userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHandlingRequests", reflect.TypeOf((*MockrequestRepository)(nil).GetHandlingRequests), ctx, userID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHandlingRequestsWithLock", reflect.TypeOf((*MockrequestRepository)(nil).GetHandlingRequestsWithLock), ctx, userID)
 }
 
 // GetRequest mocks base method.
@@ -78,56 +78,4 @@ func (m *MockrequestRepository) GetRequest(ctx context.Context, id int64) (model
 func (mr *MockrequestRepositoryMockRecorder) GetRequest(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRequest", reflect.TypeOf((*MockrequestRepository)(nil).GetRequest), ctx, id)
-}
-
-// MockuserRepository is a mock of userRepository interface.
-type MockuserRepository struct {
-	ctrl     *gomock.Controller
-	recorder *MockuserRepositoryMockRecorder
-}
-
-// MockuserRepositoryMockRecorder is the mock recorder for MockuserRepository.
-type MockuserRepositoryMockRecorder struct {
-	mock *MockuserRepository
-}
-
-// NewMockuserRepository creates a new mock instance.
-func NewMockuserRepository(ctrl *gomock.Controller) *MockuserRepository {
-	mock := &MockuserRepository{ctrl: ctrl}
-	mock.recorder = &MockuserRepositoryMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockuserRepository) EXPECT() *MockuserRepositoryMockRecorder {
-	return m.recorder
-}
-
-// GetUser mocks base method.
-func (m *MockuserRepository) GetUser(ctx context.Context, id int64) (model.User, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUser", ctx, id)
-	ret0, _ := ret[0].(model.User)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetUser indicates an expected call of GetUser.
-func (mr *MockuserRepositoryMockRecorder) GetUser(ctx, id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUser", reflect.TypeOf((*MockuserRepository)(nil).GetUser), ctx, id)
-}
-
-// LockUser mocks base method.
-func (m *MockuserRepository) LockUser(ctx context.Context, id int64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LockUser", ctx, id)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// LockUser indicates an expected call of LockUser.
-func (mr *MockuserRepositoryMockRecorder) LockUser(ctx, id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockUser", reflect.TypeOf((*MockuserRepository)(nil).LockUser), ctx, id)
 }

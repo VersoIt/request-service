@@ -3,6 +3,7 @@ package request
 import (
 	"RequestService/internal/domain/model"
 	"context"
+	"time"
 )
 
 func (s *Service) CreateRequest(
@@ -10,12 +11,7 @@ func (s *Service) CreateRequest(
 	request model.Request,
 	userID int64,
 ) (int64, error) {
-	err := s.userRepo.LockUser(ctx, userID)
-	if err != nil {
-		return 0, err
-	}
-
-	requests, err := s.requestRepo.GetHandlingRequests(ctx, userID)
+	requests, err := s.requestRepo.GetHandlingRequestsWithLock(ctx, userID)
 	if err != nil {
 		return 0, err
 	}
@@ -23,6 +19,8 @@ func (s *Service) CreateRequest(
 	if len(requests) > 0 {
 		return 0, model.ErrRequestUnderConsideration
 	}
+
+	request.CreatedAt = time.Now()
 
 	id, err := s.requestRepo.CreateRequest(ctx, request, userID)
 	if err != nil {
