@@ -1,10 +1,10 @@
 {
   "Postgres": {
     "Host": "localhost",
-    "DBName": "wordwiz",
+    "DBName": "request",
     "Port": "5432",
-    "User": "root",
-    "Password": "root",
+    "User": "user",
+    "Password": "password",
     "MaxOpenConns": 25,
     "MaxIdleConns": 10,
     "MaxConnLifetimeMin": 5
@@ -12,5 +12,11 @@
   "Server": {
     "Port": 8080
   },
-  "ServerCloseTimeoutMS": 10000
+  "ServerCloseTimeoutMS": 10000,
+  "KafkaProducer": {
+    "Brokers": [
+      "localhost:29092"
+    ],
+    "Topic": "request"
+  }
 }

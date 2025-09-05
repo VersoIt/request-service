@@ -58,7 +58,7 @@ func main() {
 	e := echo.New()
 	e.Validator = validator.New()
 
-	srv := server.New(config.Config{}, e, handler)
+	srv := server.New(cfg, e, handler)
 
 	wg := sync.WaitGroup{}
 	wg.Add(1)

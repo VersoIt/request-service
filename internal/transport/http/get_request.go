@@ -1,6 +1,8 @@
 package http
 
 import (
+	"RequestService/internal/domain/model"
+	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
@@ -17,7 +19,11 @@ func (h *Handler) getRequest(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid id")
 	}
 
-	req, err := h.uc.GetRequest(c.Request().Context(), int64(id))
+	req, err := h.uc.GetRequest(c.Request().Context(), id)
+	if errors.Is(err, model.ErrRequestNotFound) {
+		return echo.NewHTTPError(http.StatusNotFound, "Request not found")
+	}
+
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
