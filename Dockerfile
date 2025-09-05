@@ -9,5 +9,6 @@ FROM alpine:3.18
 WORKDIR /app
 COPY --from=builder /app/myapp .
 COPY --from=builder /app/config/config.json /app/config/config.json
+COPY --from=builder /app/migrations /app/migrations
 EXPOSE 8080
 CMD ["./myapp"]
